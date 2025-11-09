@@ -1,0 +1,20 @@
+{
+  "name": "jwt-email-issuer-example-server",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch server.ts",
+    "start": "tsx server.ts"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "jwt-email-issuer": "file:../.."
+  },
+  "devDependencies": {
+    "tsx": "^4.15.8",
+    "typescript": "^5.6.3"
+  }
+}
+
