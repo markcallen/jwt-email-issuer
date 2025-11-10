@@ -2,6 +2,7 @@
   "name": "jwt-email-issuer",
   "version": "1.0.0",
   "description": "Issue and validate JWTs by email with auto secret management, Express router, and a React hook.",
+  "author": "Mark C Allen <mark@markcallen.com>",
   "license": "MIT",
   "type": "module",
   "main": "./dist/cjs/index.cjs",

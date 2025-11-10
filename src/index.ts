@@ -1,8 +1,16 @@
 import { promises as fs } from "node:fs";
 import { randomBytes } from "node:crypto";
 import * as path from "node:path";
-import jwt, { SignOptions } from "jsonwebtoken";
-const { sign: signJwt, verify: verifyJwt } = jwt;
+import jsonwebtoken, { SignOptions } from "jsonwebtoken";
+
+type JsonWebTokenModule = typeof import("jsonwebtoken");
+
+const jwtModule: JsonWebTokenModule =
+  typeof (jsonwebtoken as Partial<JsonWebTokenModule>).sign === "function"
+    ? (jsonwebtoken as JsonWebTokenModule)
+    : ((jsonwebtoken as { default?: JsonWebTokenModule }).default ?? (jsonwebtoken as JsonWebTokenModule));
+
+const { sign: signJwt, verify: verifyJwt } = jwtModule;
 
 import type { JwtIssuerOptions, TokenPayload } from "./types.js";
 
