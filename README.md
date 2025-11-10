@@ -17,28 +17,48 @@ import { createJwtRouter } from "jwt-email-issuer/express";
 const app = express();
 app.use(express.json());
 
-app.use(createJwtRouter({
-  issuer: "com.example.issuer",
-  audience: "com.example.web",
-  expiresIn: "10m",
-}));
+app.use(
+  createJwtRouter({
+    issuer: "com.example.issuer",
+    audience: "com.example.web",
+    expiresIn: "10m",
+  })
+);
 
 app.listen(3000);
 ```
 
-### Demo endpoint (no auth): send token in header
+### Workflow: issue, validate, and demo the token
 
+1. Issue a token (replace the email address as needed):
+
+```bash
+curl -X POST http://localhost:3000/.well-known/token \
+  -H "Content-Type: application/json" \
+  -d '{"email":"dev@example.com"}' | jq -r .
 ```
-GET /api/echo-token
-Header: X-Email-Token: <jwt>
+
+2. Validate the token with the Express server:
+
+```bash
+curl -X POST http://localhost:3000/.well-known/validate \
+  -H "Content-Type: application/json" \
+  -d "{\"token\":\"ey...\"}" | jq
 ```
+
+3. Hit the demo endpoint (no auth). It simply echoes whatever is provided in `X-Email-Token`:
+
+   ```
+   GET /api/echo-token
+   Header: X-Email-Token: <jwt>
+   ```
 
 ## React
 
 ```tsx
 import { JwtTokenButton, useJwtToken } from "jwt-email-issuer/react";
 
-<JwtTokenButton serverUrl="http://localhost:3000" email="dev@example.com" />
+<JwtTokenButton serverUrl="http://localhost:3000" email="dev@example.com" />;
 ```
 
 The hook auto-refreshes the token when < 60s remain before expiry.
