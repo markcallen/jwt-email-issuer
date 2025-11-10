@@ -1,6 +1,6 @@
 {
   "name": "jwt-email-issuer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Issue and validate JWTs by email with auto secret management, Express router, and a React hook.",
   "homepage": "https://github.com/markcallen/jwt-email-issuer",
   "author": "Mark C Allen <mark@markcallen.com>",
