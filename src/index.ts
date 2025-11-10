@@ -1,16 +1,7 @@
 import { promises as fs } from "node:fs";
 import { randomBytes } from "node:crypto";
 import * as path from "node:path";
-import jsonwebtoken, { SignOptions } from "jsonwebtoken";
-
-type JsonWebTokenModule = typeof import("jsonwebtoken");
-
-const jwtModule: JsonWebTokenModule =
-  typeof (jsonwebtoken as Partial<JsonWebTokenModule>).sign === "function"
-    ? (jsonwebtoken as JsonWebTokenModule)
-    : ((jsonwebtoken as { default?: JsonWebTokenModule }).default ?? (jsonwebtoken as JsonWebTokenModule));
-
-const { sign: signJwt, verify: verifyJwt } = jwtModule;
+import jwt from "jsonwebtoken";
 
 import type { JwtIssuerOptions, TokenPayload } from "./types.js";
 
@@ -45,7 +36,7 @@ export async function issueToken(email: string, opts: IssueTokenOptions = {}): P
   if (!email) throw new Error("email is required");
   const secret = await loadSecret(opts.secretPath);
   const issuer = opts.issuer ?? DEFAULTS.issuer;
-  const expiresIn: SignOptions["expiresIn"] = opts.expiresIn ?? DEFAULTS.expiresIn;
+  const expiresIn: jwt.SignOptions["expiresIn"] = opts.expiresIn ?? DEFAULTS.expiresIn;
   const algorithm = opts.algorithm ?? DEFAULTS.algorithm;
 
   const payload: TokenPayload = {
@@ -55,8 +46,8 @@ export async function issueToken(email: string, opts: IssueTokenOptions = {}): P
     aud: opts.audience
   };
 
-  const signOptions: SignOptions = { algorithm, expiresIn };
-  return signJwt(payload, secret, signOptions);
+  const signOptions: jwt.SignOptions = { algorithm, expiresIn };
+  return jwt.sign(payload, secret, signOptions);
 }
 
 export type VerifyOptions = JwtIssuerOptions & { ignoreExpiration?: boolean };
@@ -65,7 +56,7 @@ export async function verifyToken(token: string, opts: VerifyOptions = {}): Prom
   const secret = await loadSecret(opts.secretPath);
   const algorithm = opts.algorithm ?? DEFAULTS.algorithm;
 
-  const decoded = verifyJwt(token, secret, {
+  const decoded = jwt.verify(token, secret, {
     algorithms: [algorithm],
     issuer: opts.issuer ?? DEFAULTS.issuer,
     audience: opts.audience,
