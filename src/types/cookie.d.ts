@@ -1,4 +1,4 @@
-declare module "cookie" {
+declare module 'cookie' {
   export interface CookieSerializeOptions {
     domain?: string;
     encode?(value: string): string;
@@ -6,8 +6,8 @@ declare module "cookie" {
     httpOnly?: boolean;
     maxAge?: number;
     path?: string;
-    priority?: "low" | "medium" | "high";
-    sameSite?: true | false | "lax" | "strict" | "none";
+    priority?: 'low' | 'medium' | 'high';
+    sameSite?: true | false | 'lax' | 'strict' | 'none';
     secure?: boolean;
   }
 
@@ -15,14 +15,7 @@ declare module "cookie" {
     decode?(value: string): string;
   }
 
-  export function serialize(
-    name: string,
-    value: string,
-    options?: CookieSerializeOptions
-  ): string;
+  export function serialize(name: string, value: string, options?: CookieSerializeOptions): string;
 
   export function parse(str: string, options?: CookieParseOptions): Record<string, string>;
 }
-
-
-

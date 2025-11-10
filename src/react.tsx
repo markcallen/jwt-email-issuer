@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState, useEffect } from "react";
+import { useCallback, useMemo, useState, useEffect } from 'react';
 
 type UseJwtOpts = {
   serverUrl: string;
@@ -10,8 +10,8 @@ type UseJwtOpts = {
 
 function decodeExp(token: string): number | null {
   try {
-    const payload = JSON.parse(atob(token.split(".")[1]));
-    return typeof payload.exp === "number" ? payload.exp : null;
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    return typeof payload.exp === 'number' ? payload.exp : null;
   } catch {
     return null;
   }
@@ -19,7 +19,7 @@ function decodeExp(token: string): number | null {
 
 export function useJwtToken(opts: UseJwtOpts) {
   const { serverUrl, email } = opts;
-  const tokenPath = opts.tokenPath ?? "/.well-known/token";
+  const tokenPath = opts.tokenPath ?? '/.well-known/token';
   const refreshThreshold = opts.refreshThreshold ?? 60;
   const cred = opts.withCredentials ?? true;
 
@@ -34,18 +34,18 @@ export function useJwtToken(opts: UseJwtOpts) {
     setError(null);
     try {
       const res = await fetch(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: cred ? "include" : "omit",
-        body: JSON.stringify({ email })
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: cred ? 'include' : 'omit',
+        body: JSON.stringify({ email }),
       });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
-      if (!data?.token) throw new Error("no token in response");
+      if (!data?.token) throw new Error('no token in response');
       setToken(data.token);
       return data.token as string;
     } catch (e: any) {
-      setError(e?.message ?? "Failed to fetch token");
+      setError(e?.message ?? 'Failed to fetch token');
       throw e;
     } finally {
       setLoading(false);
@@ -89,10 +89,10 @@ export function JwtTokenButton({ serverUrl, email, onToken, children }: BtnProps
   return (
     <div>
       <button disabled={loading} onClick={() => fetchToken()}>
-        {children ?? (loading ? "Fetching…" : "Get Token")}
+        {children ?? (loading ? 'Fetching…' : 'Get Token')}
       </button>
-      {token && <small style={{ display: "block", wordBreak: "break-all" }}>{token}</small>}
-      {error && <small style={{ color: "red", display: "block" }}>{error}</small>}
+      {token && <small style={{ display: 'block', wordBreak: 'break-all' }}>{token}</small>}
+      {error && <small style={{ color: 'red', display: 'block' }}>{error}</small>}
     </div>
   );
 }

@@ -1,8 +1,8 @@
-const fs = require("node:fs/promises");
-const path = require("node:path");
+const fs = require('node:fs/promises');
+const path = require('node:path');
 
-const rootDir = path.resolve(__dirname, "..");
-const cjsDir = path.join(rootDir, "dist", "cjs");
+const rootDir = path.resolve(__dirname, '..');
+const cjsDir = path.join(rootDir, 'dist', 'cjs');
 
 async function renameJsToCjs(dir) {
   const entries = await fs.readdir(dir, { withFileTypes: true });
@@ -16,22 +16,19 @@ async function renameJsToCjs(dir) {
         return;
       }
 
-      if (entry.isFile() && path.extname(entry.name) === ".js") {
+      if (entry.isFile() && path.extname(entry.name) === '.js') {
         const targetPath = path.join(dir, `${path.parse(entry.name).name}.cjs`);
         await fs.rename(fullPath, targetPath);
       }
-    })
+    }),
   );
 }
 
 renameJsToCjs(cjsDir).catch((error) => {
-  if (error && error.code === "ENOENT") {
+  if (error && error.code === 'ENOENT') {
     return;
   }
 
-  console.error("[postbuild] Failed to rename CJS outputs:", error);
+  console.error('[postbuild] Failed to rename CJS outputs:', error);
   process.exitCode = 1;
 });
-
-
-

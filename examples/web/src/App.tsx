@@ -1,6 +1,9 @@
-import TokenDemo from "./TokenDemo";
-import "./App.css";
+import TokenDemo from './TokenDemo';
 
 export default function App() {
-  return <TokenDemo />;
+  return (
+    <div className="flex min-h-screen w-full items-center justify-center px-4 py-12">
+      <TokenDemo />
+    </div>
+  );
 }
