@@ -2,6 +2,7 @@
   "name": "jwt-email-issuer",
   "version": "1.0.0",
   "description": "Issue and validate JWTs by email with auto secret management, Express router, and a React hook.",
+  "homepage": "https://github.com/markcallen/jwt-email-issuer",
   "author": "Mark C Allen <mark@markcallen.com>",
   "license": "MIT",
   "type": "module",
@@ -9,16 +10,32 @@
   "module": "./dist/index.js",
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/cjs/index.cjs"
     },
     "./express": {
+      "types": "./dist/express.d.ts",
       "import": "./dist/express.js",
       "require": "./dist/cjs/express.cjs"
     },
     "./react": {
+      "types": "./dist/react.d.ts",
       "import": "./dist/react.js",
       "require": "./dist/cjs/react.cjs"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "express": [
+        "dist/express.d.ts"
+      ],
+      "react": [
+        "dist/react.d.ts"
+      ],
+      "*": [
+        "dist/*.d.ts"
+      ]
     }
   },
   "types": "./dist/index.d.ts",
