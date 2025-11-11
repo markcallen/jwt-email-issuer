@@ -25,7 +25,7 @@ app.use(
   }),
 );
 
-app.listen(3000);
+app.listen(3000, () => console.log('Server on http://localhost:3000'));
 ```
 
 ### Workflow: issue, validate, and demo the token
@@ -49,9 +49,43 @@ curl -X POST http://localhost:3000/.well-known/validate \
 ## React
 
 ```tsx
-import { JwtTokenButton, useJwtToken } from 'jwt-email-issuer/react';
+import { JwtTokenButton } from 'jwt-email-issuer/react';
 
-<JwtTokenButton serverUrl="http://localhost:3000" email="dev@example.com" />;
+<JwtTokenButton
+  serverUrl="http://localhost:3000"
+  email="dev@example.com"
+  onToken={(token) => console.log('JWT token:', token)}
+/>;
+```
+
+or
+
+```tsx
+import { useEffect } from 'react';
+import { useJwtToken } from 'jwt-email-issuer/react';
+
+function TokenLogger() {
+  const { token, fetchToken } = useJwtToken({
+    serverUrl: 'http://localhost:3000',
+    email: 'dev@example.com',
+  });
+
+  useEffect(() => {
+    fetchToken().catch(console.error);
+  }, [fetchToken]);
+
+  useEffect(() => {
+    if (token) {
+      console.log('Token updated:', token);
+    }
+  }, [token]);
+
+  return (
+    <button type="button" onClick={() => fetchToken()}>
+      Refresh token
+    </button>
+  );
+}
 ```
 
 The hook auto-refreshes the token when < 60s remain before expiry.
