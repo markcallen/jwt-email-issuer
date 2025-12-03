@@ -97,6 +97,11 @@ The hook auto-refreshes the token when < 60s remain before expiry.
 - `GET  /.well-known/jwt-issuer` → discovery JSON
 - `GET  /.well-known/healthz` → `ok`
 
+## Learn More
+
+- 📖 **Article**: [Feature Flags Without an IdP: Email‑Scoped JWTs with OpenFeature + DevCycle](https://www.markcallen.com/feature-flags-without-an-idp-email-scoped-jwts-with-openfeature-devcycle/) - A complete guide on using this package with OpenFeature and DevCycle for progressive delivery
+- 📦 **Example Repository**: [jwt-email-issuer-example](https://github.com/markcallen/jwt-email-issuer-example) - A full working example demonstrating feature flags with email-based targeting
+
 ## Publishing to npm
 
 1. Create an npm token and add it as a GitHub secret named `NPM_TOKEN` in your repo settings.
@@ -104,8 +109,8 @@ The hook auto-refreshes the token when < 60s remain before expiry.
 
 ## License
 
-MIT
+MIT License - see [LICENSE](LICENSE) file for details.
 
 ## Author
 
-Mark C Allen (@markcallen)
+Mark C Allen ([@markcallen](https://github.com/markcallen))
